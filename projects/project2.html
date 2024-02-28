@@ -24,16 +24,57 @@
 
 		<!-- Main -->
 			<div id="main">
-                <h1>Astronomy Analysis</h1>
-                <small>Zane Hutchens - February 18, 2024</small>
+                <h1>Stellar Object Classification</h1>
+                <small>Zane Hutchens - February 25	, 2024</small>
                 <br>
                 <br>
                 <h2>The Problem</h2>
-                <p>Astronomical objects not within in our solar system such as exoplanets, comets, asteroids, galaxies, etc are extremely far away, so it is naturally difficult to try and classify them without substantial anaylsis and research. With that being said, I would like to try and predict if a given astronomical object is an exoplanet. I think this dataset archive contains lots of useful information for training decision based machine learning models for that purpose.</p>
-                <h2>Introducing the Dataset</h2>
-                <p>This dataset comes from a larger collection of data that is maintained by NASA Exoplanet Archive. It is a collection of information on known existing exoplanets including name, star host, galaxy, discovery method, discovery year, discovery telescope, and more. It is also a very large dataset with 34951 rows  287 columns, so there is more than enough data available. However, it does contain lots of null values so it will have to go through a cleaning process before it can be used to train a model.</p>
-                <h2>Preprocessing</h2>
-                <p></p>
+				<p>With so much new data coming in everyday from telescopes and observatories, big data and data science is beginning to play a key role in astronomy and astrophysics. Machine learning and data analytics can be used to exponentially increase the rate at which new data can be analyzed, without having to complete any manual calculations. Additionally, machine learning can be used to predict properties, classify stellar objects, predict locations, and much more. With this dataset I would like to predict the classification of each stellar object using multiple classification techniques such as Naive Bayes, Decision Tree, and Random Forest. Finally, the main question I have is how the characteristics of stellar objects can be used to identify the object.</p>
+				<h2>Dataset</h2>
+				<p>The dataset I'm using contains 100,000 observations taken from space by the Sloan Digital Sky Survey group, and contains 17 features. The features include red filter	 wavelength value, infrared filters, ultraviolet filters, declination and ascension angles, and the object class. In this dataset, there are three classes: Galaxy, Star, and Quasars. The data is publicly available on Kaggle and can be found here: https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17</p>
+				<h2>Preprocessing</h2>
+				<p>As for the preprocessing stage, the dataset was very clean to begin with, but there were a few steps I followed to make sure it was ready for visualization and modeling. First, I checked for null values to eliminate any potential errors. Secondly, I ended up dropping a lot of columns from the dataset since they were not very important to my models, and almost of all of them were ID associated and did not have anything to do with the actual characterisitcs of the object. Finally, the actual dataset was very skewed towards galaxies, so I removed about 2/3 of galaxy observations to balance the data further.</p>
+				<h2>Data Visualizations</h2>
+				<p>The first visualization I have is a scatter plot of red filter and alpha values. In this case, alpha refers to the ascension angle of the stellar object and 'r' refers to its red filter value. In this case, we see much of the data is in the middle, but some outliers exist where they have a very large red shift value and a low alpha value, and a very low alpha value and low red shift value.</p>
+				<img src="images/alphavsredshift.png" alt="Red shift vs Alpha">
+				<p>For the second visualization, I made a very simple bar plot to visualize the difference between red filter values in the classes. We can see that quasars have the highest value at 20, then galaxies, and finally stars.</p>
+				<img src="images/classvsredshift.png" alt="Class vs Red Shift">
+				<p>In this graph, I have created a stacked histogram plot counting the values of alpha between the three classes. We can see that galaxies tend to have the highest ascension angle, then quasars, and finally stars.</p>
+				<img src="images/histplotastronomy.png" alt="Hist Plot">
+				<p>Additionally, I created a kernel density estimate plot to visualize the distribution and differences in the delta value, or declination angle. Similar to the ascension plot, galaxies have the highest declination angles, then quasars, and finally stars.</p>
+				<img src="images/kdeplotastronomy.png" alt="KDE Plot">
+				<p>The last plot I have is another scatter plot, this time comparing delta and alpha values, or declination angles to ascension angles. The data points almost seem to curve, and most are centered in the middle. However, there are two groups of outliers with low delta and alpha values, or low delta values and high alpha values. Additionally, there are some points with high delta and alpha values, which seem to almost exclusively star objects.</p>
+				<img src="images/deltavsalpha.png" alt="">
+				<h2>Modeling</h2>
+				<p>I used two models to test the differences of each and see which ones performed the best, these include decision trees and random forests.</p>
+				<h3>Decision Tree Model</h3>
+				<p>Because of its interpretability and ease of explanation, I chose to use decision trees for my first model. It is a supervised learning technique that attempts to answer questions based on the current data. The end result is a tree structure with a root node and series of nodes, where each node represents another decision. Additionally, decision trees are not sensitive to the size of the data and do not need a lot of preprocessing done to work well. With my testing, my decision tree usually ended up with around a 96% accuracy on the test datasets. Its precision, recall, and f1 scores were also quite at, in the ranges 93% - 100%. Finally, I have a few visualizations for the decision tree:</p>
+				<p>Decision Tree Visual</p>
+				<img src="images/decisiontree.png" alt="Decision Tree">
+				<p>Feature Importance</p>
+				<img src="images/decisiontreefi.png" alt="dt feature importance">
+				<br>
+				<br>
+				<h3>Random Forest Model</h3>
+				<p>Since the random forest model is essentially combining multiple decision trees. Similar to decision trees, its very easy to interpret and explain while also being powerful in its capabilites. It is also a supervised learning technique and uses the same mechanisms as decision trees. It can be computationally intensive to run, especially as the number of trees increase. Additionally, it is usually only preferred for larger datasets. Finally, the mean accuracy score for my random forest tended to be around 97% on the test datasets. Additonally, the precision, recall, and f1 scores ranged from 94 to 100%.</p>
+				<p>Random Forest Visual</p>
+				<img src="images/randomforest.png" alt="Random Forest">
+				<p>Feature Importance</p>
+				<img src="images/rf_fi.png" alt="rf feature importance">
+				<h2>Evaluation</h2>
+				<p>My models both performed well, the mean accuracy for decision trees being 96% and random forest being 97%. I also cross validated these scores to make sure they were good, and got the same numbers back. Additionally, I used the precision metric on both models to test its accuracy on true positives, or classification predictions that were correct. I also used the recall score on both to test how many classes the model correctly predicted. Finally, the f1-score was used to create a mean between the recall and precision. For both of the models, decision tree and random forest, the mean accuracy, precision, recall, and f1 score was in a range of 93 to 100%. They both performed very well, but I was expecting there to be a larger gap between the decision tree and random forest scores, given that random forest is essentially a collection of decision trees. I also added the confusion matrix visualizations for my models below:</p>
+				<h4>Decision Tree Confusion Matrix</h4>
+				<img src="images/decisiontreecm.png" alt="dt cm">
+				<h4>Random Forest Confusion Matrix</h4>
+				<img src="images/rf_cm.png" alt="rf cm">
+				<h2>Storytelling</h2>
+				<p>With modeling and metrics, I was able to answer my initial question of how the characterisitcs of stellar objects can be used to identify them. However, the scale of how important some features were to others surprised me. In both decision tree and random forest, the redshift feature is far more important than the others. Additionally. it seems that most of the characteristics involving some form of a filter, such as green or ultraviolet are more important than ID fields, alpha, and delta values. The model performed extremely well was correct on most of its predictions, and even its evaluation metrics were good. However, with modeling and metrics complete I do wonder why the redshift value is so much more important than the others.</p>
+				<h2>Impact</h2>
+				<p>I believe this project could advance the understanding of how machine learning and big data analytics could be utilized in astrophysics and astronmy. This could include trying to predict stellar locations, properties, or even the specific type of stellar object, such as gas planet or red giant stars. Additionally, it's plausible that this is used to branch into other areas of astrophysics, such as space travel, cosmology, and exoplanets. Finally, the models did very well with the dataset and accurately predicted most of the classes, showing that machine learning can be useful and an incredible tool for analysis in this area.</p>
+				<h2>References</h2>
+				<p>fedesoriano, (n.d.) Stellar Classification Dataset - SDSS17. Kaggle. <a href="https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17">https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17</a></p>
+				<h2>Github</h2>
+				<p>The jupyter notebook for my code can be found <a href="https://github.com/zhutchens/astronomy_analysis">here.</a> Within the notebook there are two additional models I was playing around with, k-Nearest Neighbors and Naive Bayes. However since the results were not as strong for these models, I decided not to include them in this report.</p>
 			</div>
 
 		<!-- Footer -->
