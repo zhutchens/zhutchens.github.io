@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<!--
+	Strata by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Zane Hutchens</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="../intro/index.html" class="image avatar"><img src="images/avatar.jpg" alt="" /></a>
+					<h1><strong>My name is Zane Hutchens</strong>, a data scientist and
+					software engineer.</h1>
+				</div>
+			</header>
+
+		<!-- Main -->
+			<div id="main">
+                <h1>Animal Crossing: New Horizons Reviews Clustering</h1>
+                <small>Zane Hutchens - April 17, 2024</small>
+                <br>
+                <br>
+                <h2>Problem</h2>
+                <p>With popular products such as video games, movies, and books, taking in reviews and going through them becomes quite the intensive problem. Reviews contain valuable information like what the audience liked, disliked, and what they thought about the game. This information can drive the next game by making changes based on what the reviews said of the previous, and has the potential to drastically increase sales and reception. However, when you have millions of reviews coming in it's difficult to go through all of them and discern what they have in common. Thats what machine learning and clustering can be helpful. I would like to try and figure out how clustering can be used to cluster reviews and see what they have in common, and extract those commonalities.</p>
+                <h2>KMeans Clustering</h2>
+                <p>The KMeans algorithm is an unsupervised learning algorithm that splits the dataset into a predetermined number of clusters. At the start, the centers (centroids) of each cluster can be one any of the data points in that cluster. After the selection of the first centroids, iteration is done through the data points where each data point is assigned to a cluster based on its distance to it. The distance is usually computed in either Manhattan or Euclidean distance. After assigning a new data point to a cluster, the centroid is recomputed by taking the mean of all of the data points located in the cluster. The assignment and update steps are repeated until one of two conditions are met: the centroids no longer change signifcantly, or iteration ends.</p>
+				<h2>Dataset</h2>
+				<p>I retrieved this Animal Crossing review dataset from Kaggle. It contains two files I was primarily interested in. One of the files contained the reviews of the major critics, such as Forbes, Telegraph, and Pocket Gamer UK. The other file contained user reviews. I concatenated both of the files into one main dataframe of reviews. They both contain who wrote the review, the review text, review date, and score. After concatentation, I had 3106 reviews and 4 columns. The dataset can be found here on <a href="https://www.kaggle.com/datasets/jessemostipak/animal-crossing">Kaggle.</a></p>
+                <h2>Data Preprocessing</h2> 
+                <p>With reviews, data preprocessing becomes a bit of a natural language problem. I used the nltk library to go through each review and remove stopwords, punctuation, and changed it all to lowercase. I also used a lemmatizer to break the words down to their roots. After these steps were completed, I used a sentiment analyzer to give each review a positive, negative, neutral, and compound score. The compound score in this scenario is essentially representing the overarching sentiment of the review. If it is less than zero, the review is more negative, and if it is greater than 0, the review is more positive. With that information, I gave each review a classification of positive or negative based on its compound score.</p>
+                <h2>Visualizations</h2>
+                <p>After preprocessing, I created a word tree and word cloud based on the reviews:</p>
+                <img src="images/wordtree.png" alt="word tree" width="800px", height = "800px">
+                <br>
+                <br>
+                <br>
+                <img src="images/wordcloud.png" alt="word cloud">
+                <br>
+				<p>With these two visualizations I planned to look to see if any words are common together. In the word cloud, we can see that the words "island, per, one, switch, animal, crossing" are fairly large, which indicates that they appear very often in the reviews. With the word tree, we can look at the flow of words and see what they can go to.</p>
+                <h2>Clustering</h2>
+                <p>I chose KMeans clustering for clustering due to its simplicity and guarantee of convergence. Further, it is simple to implement and scales very well to large datasets. Finally, the results are easy to interpret and showcase to an audience. Compared to other clustering techinques, such as Agglomerative Clustering, KMeans uses distance to calculate where each data point should be placed, is scalable to large datasets, and has a linear time complexity which is makes it computationally inexpensive. However, choosing the number of clusters is very subjective and KMeans can be sensitive to outliers in the data. It also assumes that all clusters have equal variance which is not always the case.</p>
+				<img src="images/elbowplot.png" alt="elbow">
+                <img src="images/clusterimage.png" alt="cluster" width = 600 height = 500>
+				<p>With this instance, I chose to use two clusters since thats where the "elbow" of the plot is, which signifies where the variance starts decreasing more slowly. I then used seaborns scatterplot function to plot the clusters based on the negative and positive values.</p>
+				<h2>Storytelling</h2>
+				<p>Looking through the clusters, a lot of the negative reviews have complaints about only be allowed to have one island per switch which does not allow for multiple people to work on their own islands separately, they must work together on a singular island. Additionally, there are a number of complaints about the multiplayer system in the game which include that the game is not very playable, quests are not available, and there is generally not much to do in multiplayer. As for the positive cluster, most reviews in that cluster claim that the game is very relaxing, addicting, and fun to play. Some of the reviews also like how you can play the game at your own pace and slowly build the island from the ground up. As for my initial problem and questions, clustering has exceeded my expectations. The reviews in the negative cluster tended to be similar and complain about the same things, while the positive cluster tended to praise the best aspects of the game.</p>
+				<h2>Impact</h2>
+				<p>I think clustering reviews like this can really help businesses, artists, and developers look at what they need to be updating to improve reception, revenue, and name recognition. Additionally, clustering can be used in other areas as well, which could include major event feedback, student feedback, and public service feedback. By analyzing the common complaints and praises, it becomes possible to look at what is being done correctly and what needs to be adjusted to better suit the needs of the audience.</p>
+				<h2>References</h2>
+				<p>Jesse Mostipak, (n.d.) Animal Crossing Reviews. Kaggle. <a href="https://www.kaggle.com/datasets/jessemostipak/animal-crossing">https://www.kaggle.com/datasets/jessemostipak/animal-crossing</a></p>
+				<h2>Code</h2>
+				<p></p>
+            </div>
+            
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<ul class="icons">
+						<li><a href="https://github.com/zhutchens" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://www.linkedin.com/in/zanehutchens" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+						<li><a href="mailto:zhut654@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; Zane Hutchens</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
